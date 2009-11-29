@@ -1,24 +1,16 @@
 var sys = require('sys')
-var filename = '/Users/makoto/work/personal/friend_hangman/log/development.log'
-// process.watchFile(filename, function (data) {
-//   sys.puts("updated..." + data);
-// });
-// sys.puts("start watching " + filename);
+var filename = process.ARGV[2];
 
-// sys.exec("tail " + filename).addCallback(function (stdout, stderr) {
-//   sys.puts("tailing");
-//   sys.puts(stdout);
-// });
-
-
+if (!filename)
+  return sys.puts("Usage: node watcher.js filename");
 
 // Look at http://nodejs.org/api.html#_child_processes for detail.
 var tail = process.createChildProcess("tail", ["-f", filename]);
 sys.puts("start tailing");
+
 tail.addListener("output", function (data) {
   sys.puts(data);
 });
-
 
 // From nodejs.org/jsconf.pdf slide 56
 var http = require("http");
@@ -27,6 +19,7 @@ http.createServer(function(req,res){
   res.sendBody("Hel");
   res.sendBody("lo\r\n");
   tail.addListener("output", function (data) {
+    res.sendBody("output\r\n");
     res.sendBody(data);
   });
   
