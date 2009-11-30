@@ -3,6 +3,8 @@
     <link rel="stylesheet" href="style.css" type="text/css"/>
     <script src="jquery-1.2.6.min.js" type="text/javascript"></script>
     <script type="text/javascript">
+    
+    // Jquery plugin for quick Comet long polling connections from ismasan (http://gist.github.com/229343)
       (function($){
         $.comet = function(url, success_callback, error_callback){
           error_callback = error_callback || function(a,b,c){alert('Error '+b)};
